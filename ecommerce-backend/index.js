@@ -36,6 +36,7 @@ mongoose
   .catch((err) => console.error("MongoDB connection error:", err));
 
 app.use("/orders", ordersRoutes);
+
 app.get("/", async (req, res) => {
   res.send("Hello");
 });
