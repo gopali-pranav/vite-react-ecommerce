@@ -5,14 +5,28 @@ const User = require("../models/user");
 // Create user
 const createUser = async (req, res) => {
   try {
-    console.log("Received request body:", req.body);
     const { username, email, password } = req.body;
-    const users = new User({ username, email, password });
-    const newUser = await users.save();
-    res.status(201).json(newUser);
+
+    // Check if email already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Email already exists" });
+    }
+
+    // Create new user
+    const newUser = new User({ username, email, password });
+    await newUser.save();
+
+    res
+      .status(201)
+      .json({ success: true, message: "User created successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Server error", message: error.message });
+    res
+      .status(500)
+      .json({ success: false, error: "Server error", message: error.message });
   }
 };
 

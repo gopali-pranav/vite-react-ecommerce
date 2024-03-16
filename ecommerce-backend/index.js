@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const ordersRoutes = require("./routes/orderRoutes");
 const userRoutes = require("./routes/userRoutes");
-const userLoginRoutes = require("./routes/userLoginRoutes");
 
 const cors = require("cors");
 
@@ -40,7 +39,7 @@ mongoose
 
 app.use("/orders", ordersRoutes);
 app.use("/users", userRoutes);
-app.use("/login", userLoginRoutes);
+
 //Start Server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
